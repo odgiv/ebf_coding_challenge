@@ -25,6 +25,10 @@ export default function EmployeeFormDialog({
   companyId = null,
   callback = null,
 }) {
+  const resetForm = () => {
+    formik.resetForm()
+  }
+
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
@@ -39,6 +43,7 @@ export default function EmployeeFormDialog({
       if (!!callback) {
         callback()
       }
+      resetForm()
       handleClose()
     },
   })
@@ -49,7 +54,7 @@ export default function EmployeeFormDialog({
       <form
         onSubmit={(values) => {
           formik.handleSubmit(values)
-          formik.resetForm()
+          // formik.resetForm()
         }}
       >
         <DialogContent sx={{padding: '20px 30px'}}>
