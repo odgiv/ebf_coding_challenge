@@ -1,0 +1,51 @@
+version: '3.6'
+
+services:
+  backend-api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./:/srv/app/
+    # command: uvicorn --reload --reload-dir "/srv/recruiting/backend" --host 0.0.0.0 --port 8080 --log-level "debug" "backend.main:app"
+    ports:
+      - '8080:8080'
+    networks:
+      - backend_network
+    depends_on:
+      - ebfdb
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    volumes:
+      - ./:/srv/app/
+    command: npm start
+    restart: on-failure
+    networks:
+      - backend_network
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend-api
+
+  ebfdb:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata:delegated
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pgpw12
+      - POSTGRES_DB=companyDb
+    ports:
+      - '5432'
+    networks:
+      - backend_network
+
+volumes:
+  postgres_data: {}
+
+networks:
+  backend_network: {}

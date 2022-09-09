@@ -1,0 +1,36 @@
+GET http://localhost:8080/company/3/employees HTTP/1.1
+
+
+POST http://localhost:8080/company HTTP/1.1
+content-Type: application/json
+
+{
+    "name": "apple"   
+}
+
+POST http://localhost:8080/employee HTTP/1.1
+content-Type: application/json
+
+{
+    "name": "Odgerel",
+    "surname": "Boldbaatar",   
+    "email": "odgrl.bd@gmail.com",
+    "address": "Pont str. 119 52062 Aachen",
+    "salary": 123,
+    "companyId": 1
+}
+
+PUT http://localhost:8080/employee HTTP/1.1
+content-Type: application/json
+
+{
+    "id": 2,
+    "name": "Odbayar",
+    "surName": "Boldbaatar",   
+    "email": "odbayar.bd@gmail.com",
+    "address": "Pont str. 119 52062 Aachen",
+    "salary": 123,
+    "companyId": 1
+}
+
+DELETE http://localhost:8080/employee HTTP/1.1
